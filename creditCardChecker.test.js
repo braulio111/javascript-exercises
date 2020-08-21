@@ -32,5 +32,6 @@ describe('creditCardChecker', () => {
     const result = creditCardChecker(invalid1);
 
     expect(result).toBe(false);
-  })
+  });
 });
+
