@@ -1,0 +1,22 @@
+{
+  "name": "javascript-exercises",
+  "version": "1.0.0",
+  "description": "",
+  "main": "creditCardChecker.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/braulio111/javascript-exercises.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/braulio111/javascript-exercises/issues"
+  },
+  "homepage": "https://github.com/braulio111/javascript-exercises#readme",
+  "devDependencies": {
+    "jest": "^26.4.1"
+  }
+}

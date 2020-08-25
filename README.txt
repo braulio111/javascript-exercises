@@ -1,2 +1,1 @@
-Hola Alvarin mensin
-prueba
+Ejercicios Codecademy Tarjetas de Credito
