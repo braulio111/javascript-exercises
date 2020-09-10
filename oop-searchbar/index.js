@@ -60,7 +60,7 @@ class ResultsList {
 
 class SearchBar {
   constructor ({ input, results, searchItems }) {
-    const resultsList = new ResultsList(document.querySelector(results));
+    const resultsList = new ResultsList(results);
     const searchEngine = new SearchEngine(searchItems);
     this._domElement = input;
 
