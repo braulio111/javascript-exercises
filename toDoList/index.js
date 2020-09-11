@@ -7,7 +7,6 @@ console.log('Hola');
 
 const INCOMPLETED = 'incompleted';
 const COMPLETED = 'completed';
-window.onload = displayTasks;
 
 class Task {
   constructor(name) { 
@@ -49,9 +48,10 @@ class LocalStorage {
 }
 
 class TaskList {
-  constructor() {
-    this.localStorage = new LocalStorage('taskList');
-    this.items = this.localStorage.getData();
+  constructor($taskList, storageKey) {
+    this.localStorage = new LocalStorage(storageKey);
+    this.items = this.localStorage.getData() || [];
+    this.$taskList = $taskList;
   }
 
   saveItemsInStorage() {
@@ -61,38 +61,67 @@ class TaskList {
   add(item) {
     this.items.push(item);
     this.saveItemsInStorage();
+    this.updateUi();
   }
 
   reset() {
     this.items = [];
     this.saveItemsInStorage();
-    x.innerHTML = '';
+    this.updateUi();
+  }
+
+  updateUi() {
+    this.$taskList.innerHTML = '';
+    this.items.forEach(this.createItemElement, this);
+  }
+
+  createItemElement(item) {
+    const $task = document.createElement('P');
+    $task.innerHTML = item.name;
+    this.$taskList.appendChild($task);
   }
 }
 
-const tasks = new TaskList();
+class App {
+  constructor($taskList, $form, $resetButton, storageKey) {
+    this.taskList = new TaskList($taskList, storageKey);
+    this.$form = $form;
+    this.$resetButton = $resetButton;
 
-document.querySelector('#taskForm').addEventListener('submit', function(e) {
-  e.preventDefault();
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onReset = this.onReset.bind(this);
+  }
 
-  const formData = new FormData(e.target);
-  const newTask = new Task(formData.get('task'));
+  start() {
+    this.$form.addEventListener('submit', this.onSubmit);
+    this.$resetButton.addEventListener('click', this.onReset);
+  }
 
-  tasks.add(newTask);
-  
-});
+  onSubmit(event) {
+    event.preventDefault();
 
-document.querySelector('#reset-tasks').addEventListener('click', function(e) {
-  tasks.reset();
-});
+    const formData = new FormData(event.target);
+    const newTask = new Task(formData.get('task'));
+    
+    this.taskList.add(newTask);
+  }
 
-var x = document.querySelector('.tasksDisplay');
-
-function displayTasks() {
-  x.innerHTML = '';
-  for(var i = 0; i < tasks.items.length; i++) {
-    x.innerHTML += "<p>" + tasks.items[i].name + "</p>";
+  onReset() {
+    this.taskList.reset();
   }
 }
 
-document.querySelector('#taskForm').addEventListener('submit', displayTasks);
+const foodList = new App(
+  document.querySelector('.foodDisplay'),
+  document.querySelector('#food-form'),
+  document.querySelector('#food-button'),
+  'food',
+).start();
+
+const taskList = new App(
+  document.querySelector('.tasksDisplay'),
+  document.querySelector('#taskForm'),
+  document.querySelector('#reset-tasks'),
+  'tasks',
+).start();
+
