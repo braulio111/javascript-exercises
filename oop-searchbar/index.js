@@ -78,27 +78,18 @@ class SearchBar {
   }
 }
 
-const pokeList = [];
-
-const getPokemon = () => {
-  fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`)
+const getPokemons = (async () => {
+  const pokemons = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`)
     .then(response => response.json())
     .then(data => {
-      for (let i = 0; i < data.results.length; i++){
-        var pokeRes = document.querySelector('#pokemon-results');
-        var poke = document.createElement('P');
-        var textN = document.createTextNode(data.results[i].name);
-        
-        poke.appendChild(textN);
-        pokeRes.appendChild(poke);
-        pokeList.push(data.results[i].name);
-      }
-  })
-}
-getPokemon();
+      const results = data.results;
 
-const pokemonSearch = new SearchBar({
-  input: document.querySelector('#pokemon-input'),
-  results: document.querySelector('#pokemon-results'),
-  searchItems: pokeList,
-});
+      return results.map(result => result.name);
+  });
+
+  new SearchBar({
+    input: document.querySelector('#pokemon-input'),
+    results: document.querySelector('#pokemon-results'),
+    searchItems: pokemons,
+  });
+})();
