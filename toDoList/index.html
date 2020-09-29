@@ -4,22 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet"> 
 </head>
 <body>
   <h1>My to do list</h1>
+  <h2>Task List</h2>
   <form id="taskForm">
-    <input type="text" name="task">
-    <button type="submit">Add</button>
+    <input type="text" name="task" id="input1">
+    <button type="submit" id="submit1">Add</button>
   </form>
   <button id="reset-tasks">Reset Tasks</button>
   <div class="tasksDisplay">
   </div>
+  <div id="f-list">
+  <h2>Food List</h2>
   <form id="food-form">
-    <input type="text" name="task">
-    <button type="submit">Add</button>
+    <input type="text" name="task" id="input2">
+    <button type="submit" id="submit2">Add</button>
   </form>
   <button id="food-button">Reset Tasks</button>
-  <div class="foodDisplay">
+  </div>
+  <div class="foodDisplay"></div>
   <script src="index.js"></script>
 </body>
 </html>
